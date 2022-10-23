@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrackTheGains.MAUI.Views.WorkoutEditPage"
+             xmlns:model="clr-namespace:TrackTheGains.MAUI.Models"
+             xmlns:viewmodel="clr-namespace:TrackTheGains.MAUI.ViewModels"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             x:DataType="viewmodel:WorkoutEditViewModel"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IsEnabled="{Binding IsEdit}" Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Size="22" FontFamily="FASolid" Glyph="{x:Static fa:Solid.Trash}" Color="White" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <Grid Padding="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout>
+                <material:TextField Title="Name" Text="{Binding Workout.Name}"/>
+                <Label Text="Exerciese" Margin="5" FontSize="Medium"/>
+                <CollectionView x:Name="ExcerciseView" ItemsSource="{Binding Workout.Excercises}" CanReorderItems="True">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Excercise">
+                            <material:TextField Padding="8" Title="{Binding OrderNr, StringFormat='Excercise {0}'}" Text="{Binding Name}">
+                            </material:TextField>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Button Margin="8" Text="Add Excercise" Command="{Binding AddExcerciseCommand}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button Grid.Row="1" Text="Save Workout" Command="{Binding SaveWorkoutCommand}"/>
+    </Grid>
+</ContentPage>
