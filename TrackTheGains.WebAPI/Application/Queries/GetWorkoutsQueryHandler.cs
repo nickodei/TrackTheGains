@@ -16,12 +16,15 @@ namespace TrackTheGains.WebAPI.Application.Queries
 
         public async Task<IEnumerable<WorkoutOverviewVM>> Handle(GetWorkoutsQuery request, CancellationToken cancellationToken)
         {
-            var workouts = await _context.Workouts.ToListAsync();
-            return workouts.Select(workout => new WorkoutOverviewVM()
-            {
-                Id = workout.Id,
-                Name = workout.Name
-            }).ToList();
+            return await _context.Workouts
+                .Include(x => x.Excercises)
+                .GroupBy(x => new { Id = x.Id, Name = x.Name })
+                .Select(x => new WorkoutOverviewVM()
+                {
+                    Id = x.First().Id,
+                    Name = x.First().Name,
+                    ExcerciseAmount = x.Count()
+                }).ToListAsync();
         }
     }
 }

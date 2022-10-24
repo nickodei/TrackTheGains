@@ -11,9 +11,7 @@ namespace TrackTheGains.Infrastructure.EntityConfigurations
             workoutConfiguration.ToTable("workouts", FitnessContext.DEFAULT_SCHEMA);
 
             workoutConfiguration.HasKey(w => w.Id);
-
-            var navigation = workoutConfiguration.Metadata.FindNavigation(nameof(Workout.Excercises));
-            navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+            workoutConfiguration.HasMany(w => w.Excercises);
         }
     }
 }

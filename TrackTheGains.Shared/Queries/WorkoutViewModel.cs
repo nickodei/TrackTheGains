@@ -4,6 +4,7 @@
     {
         public Guid Id { get; init; }
         public string Name { get; init; }
+        public int ExcerciseAmount { get; init; }
     }
 
     public record WorkoutVM
