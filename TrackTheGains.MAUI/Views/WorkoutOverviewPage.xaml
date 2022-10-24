@@ -4,13 +4,14 @@
              x:Class="TrackTheGains.MAUI.Views.WorkoutOverviewPage"
              xmlns:model="clr-namespace:TrackTheGains.MAUI.Models"
              xmlns:viewmodel="clr-namespace:TrackTheGains.MAUI.ViewModels"
+             xmlns:querie="clr-namespace:TrackTheGains.Shared.Queries;assembly=TrackTheGains.Shared"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              x:DataType="viewmodel:WorkoutOverviewViewModel"
              Title="Workouts">
     <VerticalStackLayout>
         <CollectionView MinimumHeightRequest="50" ItemsSource="{Binding Workouts}" EmptyView="No Workouts found.">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Workout">
+                <DataTemplate x:DataType="querie:WorkoutOverviewVM">
                     <Frame Padding="8">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer 
@@ -19,7 +20,7 @@
                         </Frame.GestureRecognizers>
                         <VerticalStackLayout>
                             <Label Text="{Binding Name}" FontSize="Subtitle"/>
-                            <Label Text="{Binding Excercises.Count, StringFormat='{0} Excercises'}" FontSize="Caption"/>
+                            <Label Text="{Binding ExcerciseAmount, StringFormat='{0} Excercises'}" FontSize="Caption"/>
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>

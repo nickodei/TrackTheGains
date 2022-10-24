@@ -1,10 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DailyManager.Web.Client.Services;
 using TrackTheGains.MAUI.Models;
 
 namespace TrackTheGains.MAUI.ViewModels
 {
-    [QueryProperty(nameof(Workout), "Workout")]
+    [QueryProperty("Id", "Id")]
     public partial class WorkoutEditViewModel : BaseViewModel, IQueryAttributable
     {
         [ObservableProperty]
@@ -13,21 +15,33 @@ namespace TrackTheGains.MAUI.ViewModels
         [ObservableProperty]
         bool isEdit = false;
 
-        public WorkoutEditViewModel()
+        private readonly IWorkoutClient _workoutClient;
+        public WorkoutEditViewModel(IWorkoutClient workoutClient)
         {
+            _workoutClient = workoutClient;
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if(query.Count == 0)
+            if(query.TryGetValue("Id", out var id))
             {
-                IsEdit = false;
-                Title = "New Workout";
+                var result = await _workoutClient.GetFullWorkoutAsync(Guid.Parse(id.ToString()));
+                if(result != null)
+                {
+                    Workout = new Workout()
+                    {
+                        Name = result.Name,
+                        Excercises = result.Excercises.Select(ex => new Excercise { Name = ex.Name, OrderNr = ex.OrderNr}).ToObservableCollection()
+                    };
+                }
+
+                IsEdit = true;
+                Title = "Edit Workout";
             }
             else
             {
-                IsEdit = true;
-                Title = "Edit Workout";
+                IsEdit = false;
+                Title = "New Workout";
             }
         }
 

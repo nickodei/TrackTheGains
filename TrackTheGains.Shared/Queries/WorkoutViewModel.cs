@@ -10,7 +10,7 @@
     public record WorkoutVM
     {
         public Guid Id { get; init; }
-        public string Name { get; init; }
+        public string Name { get; init; }        
         public List<ExcerciseVM> Excercises { get; set; }
     }
 
@@ -18,5 +18,6 @@
     {
         public Guid Id { get; init; }
         public string Name { get; init; }
+        public int OrderNr { get; init; }
     }
 }

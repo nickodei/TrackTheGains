@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using DailyManager.Web.Client.Services;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using TrackTheGains.MAUI.Models;
 using TrackTheGains.Shared.Queries;
@@ -8,7 +9,7 @@ namespace TrackTheGains.MAUI.ViewModels
 {
     public partial class WorkoutOverviewViewModel : BaseViewModel
     {
-        public List<WorkoutOverviewVM> Workouts => new();
+        public ObservableCollection<WorkoutOverviewVM> Workouts { get; private set; } = new();
 
         private readonly IWorkoutClient _workoutClient;
         public WorkoutOverviewViewModel(IWorkoutClient workoutClient)
@@ -46,12 +47,9 @@ namespace TrackTheGains.MAUI.ViewModels
         }
 
         [RelayCommand]
-        public async Task GoToEditWorkoutPage(Workout workout)
+        public async Task GoToEditWorkoutPage(WorkoutOverviewVM workout)
         {
-            await Shell.Current.GoToAsync("workout-template/edit", true, new Dictionary<string, object>
-            {
-                {"Workout", workout }
-            });
+            await Shell.Current.GoToAsync($"workout-template/edit?Id={workout.Id}");
         }
 
         [RelayCommand]

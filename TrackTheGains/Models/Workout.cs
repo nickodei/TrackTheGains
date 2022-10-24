@@ -1,14 +1,10 @@
-﻿namespace TrackTheGains.Domain.Models
-{
-    public class Workout
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public List<Excercise> Excercises { get; set; }
+﻿using TrackTheGains.Domain.Common;
 
-        public Workout()
-        {
-            Excercises = new List<Excercise>();
-        }
+namespace TrackTheGains.Domain.Models
+{
+    public class Workout : AuditableEntity
+    {
+        public string? Name { get; set; }
+        public IList<Excercise> Excercises { get; private set; } = new List<Excercise>();
     }
 }

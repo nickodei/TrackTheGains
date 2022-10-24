@@ -11,7 +11,6 @@ namespace TrackTheGains.Infrastructure.EntityConfigurations
             workoutConfiguration.ToTable("workouts", FitnessContext.DEFAULT_SCHEMA);
 
             workoutConfiguration.HasKey(w => w.Id);
-            workoutConfiguration.HasMany(w => w.Excercises);
         }
     }
 }

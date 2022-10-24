@@ -1,1 +1,1 @@
-﻿dotnet ef migrations add InitialCreate --startup-project "..\TrackTheGains.WebAPI"
+﻿dotnet ef migrations add v_0_0_2 --startup-project "..\TrackTheGains.WebAPI"

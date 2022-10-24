@@ -138,6 +138,10 @@
           },
           "name": {
             "type": "string"
+          },
+          "excerciseAmount": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -199,6 +203,10 @@
           },
           "name": {
             "type": "string"
+          },
+          "orderNr": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
