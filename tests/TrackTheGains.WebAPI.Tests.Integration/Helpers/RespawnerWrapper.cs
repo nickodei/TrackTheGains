@@ -1,31 +1,46 @@
 ﻿using Npgsql;
 using Respawn;
+using Respawn.Graph;
 
 namespace TrackTheGains.WebAPI.Tests.Integration.Helpers
 {
-    public static class RespawnerWrapper
+    public static class RespawnHelper
     {
-        public static async Task<Respawner> CreateCheckpoint(string connectionString)
+        public static RespawnerOptions GetPostgresOptions()
         {
-            using var connection = new NpgsqlConnection(connectionString);
-            connection.Open();
-
-            return await Respawner.CreateAsync(connection, new RespawnerOptions
+            return new RespawnerOptions()
             {
-                SchemasToExclude = new[]
+                SchemasToExclude = new string[] { "public" },
+                SchemasToInclude = new string[] { "fitness" },
+                TablesToIgnore = new Table[]
                 {
-                    "public"
+                    "__EFMigrationsHistory"
                 },
                 DbAdapter = DbAdapter.Postgres
-            });
+            };
         }
 
-        public static async Task ResetToCheckpoint(Respawner respawner, string connectionString)
+        public static async Task<Respawner> CreateRespawner(string connectionString)
         {
-            using var conn = new NpgsqlConnection(connectionString);
+            Respawner respawner;
+            using (var npgsqlConnection = new NpgsqlConnection(connectionString))
+            {
+                await npgsqlConnection.OpenAsync();
+                respawner = await Respawner.CreateAsync(npgsqlConnection, GetPostgresOptions());
+                await npgsqlConnection.CloseAsync();
+            }
 
-            conn.Open();
-            await respawner.ResetAsync(conn);
+            return respawner;
+        }
+
+        public static async Task ResetDbAsync(Respawner respawner, string connectionString)
+        {
+            using (var npgsqlConnection = new NpgsqlConnection(connectionString))
+            {
+                await npgsqlConnection.OpenAsync();
+                await respawner.ResetAsync(npgsqlConnection);
+                await npgsqlConnection.CloseAsync();
+            }
         }
     }
 }

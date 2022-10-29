@@ -29,7 +29,7 @@ namespace TrackTheGains.WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "excercises",
+                name: "exercises",
                 schema: "fitness",
                 columns: table => new
                 {
@@ -41,9 +41,9 @@ namespace TrackTheGains.WebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_excercises", x => x.Id);
+                    table.PrimaryKey("PK_exercises", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_excercises_workouts_WorkoutId",
+                        name: "FK_exercises_workouts_WorkoutId",
                         column: x => x.WorkoutId,
                         principalSchema: "fitness",
                         principalTable: "workouts",
@@ -52,9 +52,9 @@ namespace TrackTheGains.WebApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_excercises_WorkoutId",
+                name: "IX_exercises_WorkoutId",
                 schema: "fitness",
-                table: "excercises",
+                table: "exercises",
                 column: "WorkoutId");
         }
 
@@ -62,7 +62,7 @@ namespace TrackTheGains.WebApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "excercises",
+                name: "exercises",
                 schema: "fitness");
 
             migrationBuilder.DropTable(

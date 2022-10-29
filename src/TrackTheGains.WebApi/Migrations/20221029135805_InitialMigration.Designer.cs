@@ -12,8 +12,8 @@ using TrackTheGains.WebApi.Infrastructure;
 namespace TrackTheGains.WebApi.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    [Migration("20221028205801_v_0_0_3")]
-    partial class v003
+    [Migration("20221029135805_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,4 +1,5 @@
-﻿using DotNet.Testcontainers.Builders;
+﻿using Docker.DotNet.Models;
+using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using Microsoft.AspNetCore.Hosting;
@@ -6,78 +7,49 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
+using Respawn;
 using TrackTheGains.WebApi.Infrastructure;
-using TrackTheGains.WebApi.Models.Workout;
+using TrackTheGains.WebAPI.Tests.Integration.Helpers;
+using Xunit;
 
 namespace TrackTheGains.WebAPI.Tests.Integration
 {
-    public class WebApiFactory : WebApplicationFactory<Program>
+    public class WebApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
+        private Respawner respawner;
         private readonly TestcontainerDatabase testcontainers = new TestcontainersBuilder<PostgreSqlTestcontainer>()
             .WithDatabase(new PostgreSqlTestcontainerConfiguration
             {
                 Database = "TrackTheGains",
                 Username = "postgres",
                 Password = "postgres",
+                Port = 6654
             })
             .Build();
+
+        public string ConnectionString => testcontainers.ConnectionString;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureTestServices(services =>
-                services.AddDbContext<FitnessContext>(
-                    opt => opt.UseNpgsql(testcontainers.ConnectionString))
-            );
-        }
-
-        public string ConnectionString => testcontainers.ConnectionString;
-
-        public void CreateNewDatabase()
-        {
-            using var scope = Services.GetService<IServiceScopeFactory>()?.CreateScope();
-            using var context = scope?.ServiceProvider.GetRequiredService<FitnessContext>();
-
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-        }
-
-
-        public async Task CreateWorkouts(List<Workout> workouts)
-        {
-            using var scope = Services.GetService<IServiceScopeFactory>()?.CreateScope();
-            using var context = scope?.ServiceProvider.GetRequiredService<FitnessContext>();
-
-            if(context is not null)
             {
-                context.Workouts.AddRange(workouts);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task CreateWorkout(string name, int availableExercises, int deletedExercises)
-        {
-            using var scope = Services.GetService<IServiceScopeFactory>()?.CreateScope();
-            using var context = scope?.ServiceProvider.GetRequiredService<FitnessContext>();
-
-            var workout = new Workout() { Name = name };
-            workout.Exercises.AddRange(Enumerable.Range(0, availableExercises).Select(_ => new Exercise()
-            {
-                Name = Guid.NewGuid().ToString(),
-                IsDeleted = false
-            }));
-            workout.Exercises.AddRange(Enumerable.Range(0, deletedExercises).Select(_ => new Exercise()
-            {
-                Name = Guid.NewGuid().ToString(),
-                IsDeleted = true
-            }));
-
-            context?.Workouts.Add(workout);
-            await context?.SaveChangesAsync();
+                services.AddDbContext<FitnessContext>(opt => opt.UseNpgsql(testcontainers.ConnectionString));
+            });
         }
 
         public async Task InitializeAsync()
         {
             await testcontainers.StartAsync();
+
+            using var scope = Server.Services.CreateScope();
+            respawner = await RespawnHelper.CreateRespawner(ConnectionString);
+        }
+
+        public async Task EnsureCleanDatabase()
+        {
+            await RespawnHelper.ResetDbAsync(respawner, ConnectionString);
         }
 
         public async new Task DisposeAsync()
