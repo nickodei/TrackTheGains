@@ -31,7 +31,7 @@ namespace TrackTheGains.WebAPI.Application.Commands
                 workout.Excercises.Add(excercise);
             }
 
-            await _workoutRepository.Add(workout);
+            await _workoutRepository.AddAsync(workout);
             return true;
         }
     }

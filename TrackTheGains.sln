@@ -9,9 +9,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.WebAPI", "TrackTheGains.WebAPI\TrackTheGains.WebAPI.csproj", "{AB56C0D1-96B9-45ED-A758-FA1E09B4DA1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTheGains.MAUI", "TrackTheGains.MAUI\TrackTheGains.MAUI.csproj", "{F3EE5E58-DEA9-49B1-8849-40E046C50853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.MAUI", "TrackTheGains.MAUI\TrackTheGains.MAUI.csproj", "{F3EE5E58-DEA9-49B1-8849-40E046C50853}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTheGains.Shared", "TrackTheGains.Shared\TrackTheGains.Shared.csproj", "{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.Shared", "TrackTheGains.Shared\TrackTheGains.Shared.csproj", "{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B69034E2-CBC7-4659-B588-2A276F3AE78B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.WebAPI.Tests.Integration", "tests\TrackTheGains.WebAPI.Tests.Integration\TrackTheGains.WebAPI.Tests.Integration.csproj", "{A4641F50-DBEE-4A2B-BBD9-C42CDEA033CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{939471A5-EC8E-4FA2-B429-570E19DE57D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTheGains.WebApi", "src\TrackTheGains.WebApi\TrackTheGains.WebApi.csproj", "{9207C2F6-65F4-4106-BADC-E42771C79B2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,9 +49,21 @@ Global
 		{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4641F50-DBEE-4A2B-BBD9-C42CDEA033CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4641F50-DBEE-4A2B-BBD9-C42CDEA033CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4641F50-DBEE-4A2B-BBD9-C42CDEA033CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4641F50-DBEE-4A2B-BBD9-C42CDEA033CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9207C2F6-65F4-4106-BADC-E42771C79B2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9207C2F6-65F4-4106-BADC-E42771C79B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9207C2F6-65F4-4106-BADC-E42771C79B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9207C2F6-65F4-4106-BADC-E42771C79B2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A4641F50-DBEE-4A2B-BBD9-C42CDEA033CE} = {B69034E2-CBC7-4659-B588-2A276F3AE78B}
+		{9207C2F6-65F4-4106-BADC-E42771C79B2F} = {939471A5-EC8E-4FA2-B429-570E19DE57D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6831D67B-4377-4840-B252-E7AAA76ABAA3}

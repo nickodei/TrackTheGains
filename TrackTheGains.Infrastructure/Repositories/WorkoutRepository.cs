@@ -12,10 +12,11 @@ namespace TrackTheGains.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task Add(Workout workout)
+        public async Task<Guid> AddAsync(Workout workout)
         {
             _context.Add(workout);
             await _context.SaveChangesAsync();
+            return workout.Id;
         }
 
         public async Task Delete(Guid workoutId)
