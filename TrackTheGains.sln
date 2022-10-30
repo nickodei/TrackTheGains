@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.Domain", "Tra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.Infrastructure", "TrackTheGains.Infrastructure\TrackTheGains.Infrastructure.csproj", "{39DEF85D-040F-4196-BBDC-9135EEB6B64B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.WebAPI", "TrackTheGains.WebAPI\TrackTheGains.WebAPI.csproj", "{AB56C0D1-96B9-45ED-A758-FA1E09B4DA1A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.MAUI", "TrackTheGains.MAUI\TrackTheGains.MAUI.csproj", "{F3EE5E58-DEA9-49B1-8849-40E046C50853}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.Shared", "TrackTheGains.Shared\TrackTheGains.Shared.csproj", "{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B69034E2-CBC7-4659-B588-2A276F3AE78B}"
@@ -35,16 +31,6 @@ Global
 		{39DEF85D-040F-4196-BBDC-9135EEB6B64B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39DEF85D-040F-4196-BBDC-9135EEB6B64B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39DEF85D-040F-4196-BBDC-9135EEB6B64B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB56C0D1-96B9-45ED-A758-FA1E09B4DA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB56C0D1-96B9-45ED-A758-FA1E09B4DA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB56C0D1-96B9-45ED-A758-FA1E09B4DA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB56C0D1-96B9-45ED-A758-FA1E09B4DA1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3EE5E58-DEA9-49B1-8849-40E046C50853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3EE5E58-DEA9-49B1-8849-40E046C50853}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3EE5E58-DEA9-49B1-8849-40E046C50853}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{F3EE5E58-DEA9-49B1-8849-40E046C50853}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3EE5E58-DEA9-49B1-8849-40E046C50853}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3EE5E58-DEA9-49B1-8849-40E046C50853}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BC7EF10-7398-4DAC-9B3A-B45892210EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU

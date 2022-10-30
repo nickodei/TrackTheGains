@@ -37,7 +37,12 @@ namespace TrackTheGains.WebApi.Services
                 {
                     Id = w.Id,
                     Name = w.Name,
-                    Exercises = w.Exercises.ConvertAll(e => new ExerciseVm() { Id = e.Id, Name = e.Name, OrderNr = e.OrderNr })
+                    Exercises = w.Exercises.Select(e => new ExerciseVm()
+                    {
+                        Id = e.Id,
+                        Name = e.Name,
+                        OrderNr = e.OrderNr
+                    }).ToList()
                 })
                 .SingleOrDefaultAsync(x => x.Id == workoutId);
         }
@@ -47,11 +52,11 @@ namespace TrackTheGains.WebApi.Services
             var workout = new Workout()
             {
                 Name = workoutVm.Name,
-                Exercises = workoutVm.Exercises.ConvertAll(e => new Exercise()
+                Exercises = workoutVm.Exercises.Select(e => new Exercise()
                 {
                     Name = e.Name,
                     OrderNr = e.OrderNr,
-                })
+                }).ToList()
             };
 
             _context.Workouts.Add(workout);
@@ -67,14 +72,14 @@ namespace TrackTheGains.WebApi.Services
             }
 
             workout.Name = workoutVm.Name;
-            workout.Exercises = workoutVm.Exercises.ConvertAll(e => new Exercise()
+            workout.Exercises = workoutVm.Exercises.Select(e => new Exercise()
             {
                 Id = e.Id.GetValueOrDefault(),
                 Name = e.Name,
                 OrderNr = e.OrderNr,
                 IsDeleted = false,
                 Workout = workout
-            });
+            }).ToList();
 
             _context.Entry(workout).State = EntityState.Modified;
             await _context.SaveChangesAsync();

@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
 using TrackTheGains.WebApi.Controllers.Dtos;
@@ -11,11 +12,15 @@ namespace Workout_Spec
 {
     public class WorkoutControllerTests: IClassFixture<WebApiFactory>
     {
+        private readonly HttpClient client;
         private readonly WebApiFactory factory;
+
+        private static string GetWorkoutById(Guid id) => $"api/workouts/{id}";
 
         public WorkoutControllerTests(WebApiFactory factory)
         {
             this.factory = factory;
+            this.client = factory.CreateClient();
         }
 
         #region Get WorkoutOverviews Request
@@ -25,7 +30,7 @@ namespace Workout_Spec
         {
             await factory.EnsureCleanDatabase();
 
-            var response = await factory.CreateClient().GetAsync("api/workouts");
+            var response = await client.GetAsync("api/workouts");
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var workouts = await response.Content.ReadFromJsonAsync<IEnumerable<WorkoutOverviewVm>>();
@@ -95,6 +100,90 @@ namespace Workout_Spec
             var workouts = await response.Content.ReadFromJsonAsync<IEnumerable<WorkoutOverviewVm>>();
             workouts.Should().NotBeNull();
             workouts?.Count().Should().Be(availableWorkouts);
+        }
+
+        #endregion
+
+        #region Get Workout Request
+
+        [Fact]
+        public async Task GetWorkout_ReturnsNotFound_WhenWorkoutDoesNotExist()
+        {
+            await factory.EnsureCleanDatabase();
+
+            var response = await client.GetAsync(GetWorkoutById(Guid.NewGuid()));
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async Task GetWorkout_ReturnsNotFound_WhenWorkoutIsDeleted()
+        {
+            await factory.EnsureCleanDatabase();
+            Workout workout = await factory.CreateWorkout(new Workout()
+            {
+                Name = "test",
+                IsDeleted = true
+            });
+
+            var response = await client.GetAsync(GetWorkoutById(workout.Id));
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async Task GetWorkout_ReturnsWorkout_WhenFound()
+        {
+            await factory.EnsureCleanDatabase();
+            var workout = await factory.CreateWorkout(new Workout()
+            {
+                Name = "test",
+                Exercises = new List<Exercise>()
+                {
+                    new Exercise() { Name = "ex1", OrderNr = 2 },
+                    new Exercise() { Name = "ex3", IsDeleted = true }
+                }
+            });
+
+            var response = await client.GetAsync(GetWorkoutById(workout.Id));
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var result = await response.Content.ReadFromJsonAsync<WorkoutVm>();
+            result.Should().NotBeNull();
+            result.Name.Should().Be("test");
+            result.Exercises.Count.Should().Be(1);
+            result.Exercises[0].Name.Should().Be("ex1");
+            result.Exercises[0].OrderNr.Should().Be(2);
+        }
+
+        #endregion
+
+        #region Create Workout Request
+
+        [Fact]
+        public async Task CreateWorkout_ReturnsWorkout_WhenRequestIsValid()
+        {
+            // Arrange
+            await factory.EnsureCleanDatabase();
+
+            // Act
+            var response = await client.PostAsJsonAsync("api/workouts", new WorkoutVm()
+            {
+                Name = "test",
+                Exercises = new List<ExerciseVm>()
+                {
+                    new ExerciseVm() { Name = "ex1", OrderNr = 1},
+                    new ExerciseVm() { Name = "ex2", OrderNr = 2}
+                }
+            });
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
+
+            var workout = await factory.GetFirstWorkout();
+            workout.Should().NotBeNull();
+            workout.Name.Should().Be("test");
+            workout.Exercises.Count.Should().Be(2);
+            workout.Exercises.Any(x => x.Name == "ex1" && x.OrderNr == 1).Should().Be(true);
+            workout.Exercises.Any(x => x.Name == "ex2" && x.OrderNr == 2).Should().Be(true);
         }
 
         #endregion

@@ -57,7 +57,7 @@ namespace TrackTheGains.WebApi.Controllers
 
         // POST: api/Workouts
         [HttpPost]
-        public async Task<ActionResult<Workout>> CreateWorkout(WorkoutVm workout)
+        public async Task<ActionResult<WorkoutVm>> CreateWorkout(WorkoutVm workout)
         {
             await _workoutService.CreateWorkoutAsync(workout);
             return Created("GetWorkout", workout);

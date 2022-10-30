@@ -1,14 +1,11 @@
-﻿using Docker.DotNet.Models;
-using DotNet.Testcontainers.Builders;
+﻿using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Respawn;
 using TrackTheGains.WebApi.Infrastructure;
 using TrackTheGains.WebAPI.Tests.Integration.Helpers;
@@ -24,8 +21,7 @@ namespace TrackTheGains.WebAPI.Tests.Integration
             {
                 Database = "TrackTheGains",
                 Username = "postgres",
-                Password = "postgres",
-                Port = 6654
+                Password = "postgres"
             })
             .Build();
 
@@ -35,7 +31,11 @@ namespace TrackTheGains.WebAPI.Tests.Integration
         {
             builder.ConfigureTestServices(services =>
             {
-                services.AddDbContext<FitnessContext>(opt => opt.UseNpgsql(testcontainers.ConnectionString));
+                services.RemoveAll(typeof(IDbConnectionFactory));
+                services.AddSingleton<IDbConnectionFactory>(_ =>
+                {
+                    return new NpgsqlConnectionFactory(testcontainers.ConnectionString);
+                });
             });
         }
 

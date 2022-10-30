@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 using TrackTheGains.WebApi.Infrastructure;
 using TrackTheGains.WebApi.Services;
 
@@ -11,7 +12,16 @@ builder.Services.AddOpenApiDocument();
 
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 
-builder.Services.AddDbContext<FitnessContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
+{
+    return new NpgsqlConnectionFactory(builder.Configuration.GetConnectionString("Default"));
+});
+
+builder.Services.AddDbContext<FitnessContext>((provider, opt) => 
+{
+    var connectionFactory = provider.GetRequiredService<IDbConnectionFactory>();
+    opt.UseNpgsql((DbConnection)connectionFactory.CreateConnection());
+});
 
 var app = builder.Build();
 

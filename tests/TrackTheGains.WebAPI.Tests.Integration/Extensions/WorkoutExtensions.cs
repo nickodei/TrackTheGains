@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using TrackTheGains.WebApi.Infrastructure;
 using TrackTheGains.WebApi.Models.Workout;
 
@@ -6,6 +7,20 @@ namespace TrackTheGains.WebAPI.Tests.Integration.Extensions
 {
     public static class WorkoutExtensions
     {
+        public static async Task<Workout> CreateWorkout(this WebApiFactory factory, Workout workout)
+        {
+            using var scope = factory.Services.GetService<IServiceScopeFactory>()?.CreateScope();
+            using var context = scope?.ServiceProvider.GetRequiredService<FitnessContext>();
+
+            if (context is not null)
+            {
+                context.Workouts.Add(workout);
+                await context.SaveChangesAsync();
+            }
+
+            return workout;
+        }
+
         public static async Task CreateWorkouts(this WebApiFactory factory, List<Workout> workouts)
         {
             using var scope = factory.Services.GetService<IServiceScopeFactory>()?.CreateScope();
@@ -37,6 +52,14 @@ namespace TrackTheGains.WebAPI.Tests.Integration.Extensions
 
             context?.Workouts.Add(workout);
             await context?.SaveChangesAsync();
+        }
+
+        public static async Task<Workout> GetFirstWorkout(this WebApiFactory factory)
+        {
+            using var scope = factory.Services.GetService<IServiceScopeFactory>()?.CreateScope();
+            using var context = scope?.ServiceProvider.GetRequiredService<FitnessContext>();
+
+            return await context.Workouts.Include(x => x.Exercises).SingleOrDefaultAsync();
         }
     }
 }
