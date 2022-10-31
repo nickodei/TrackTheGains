@@ -2,77 +2,76 @@
 using TrackTheGains.WebApi.Controllers.Dtos;
 using TrackTheGains.WebApi.Services;
 
-namespace TrackTheGains.WebApi.Controllers
+namespace TrackTheGains.WebApi.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class WorkoutsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class WorkoutsController : ControllerBase
+    private readonly IWorkoutService _workoutService;
+
+    public WorkoutsController(IWorkoutService service)
     {
-        private readonly IWorkoutService _workoutService;
+        _workoutService = service;
+    }
 
-        public WorkoutsController(IWorkoutService service)
+    // GET: api/Workouts
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<WorkoutOverviewVm>>> GetWorkouts()
+    {
+        var workouts = await _workoutService.GetWorkoutOverviewsAsync();
+        return Ok(workouts);
+    }
+
+    // GET: api/Workouts/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<WorkoutVm>> GetWorkout(Guid id)
+    {
+        var workout = await _workoutService.GetWorkoutByIdAsync(id);
+        if (workout == null)
         {
-            _workoutService = service;
+            return NotFound();
         }
 
-        // GET: api/Workouts
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<WorkoutOverviewVm>>> GetWorkouts()
+        return Ok(workout);
+    }
+
+    // PUT: api/Workouts/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateWorkout(Guid id, WorkoutVm workout)
+    {
+        if (id != workout.Id)
         {
-            var workouts = await _workoutService.GetWorkoutOverviewsAsync();
-            return Ok(workouts);
+            return BadRequest();
         }
 
-        // GET: api/Workouts/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<WorkoutVm>> GetWorkout(Guid id)
+        var result = await _workoutService.UpdateWorkoutAsync(workout);
+        if(result is null)
         {
-            var workout = await _workoutService.GetWorkoutByIdAsync(id);
-            if (workout == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(workout);
+            return NotFound();
         }
 
-        // PUT: api/Workouts/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateWorkout(Guid id, WorkoutVm workout)
+        return NoContent();
+    }
+
+    // POST: api/Workouts
+    [HttpPost]
+    public async Task<ActionResult<WorkoutVm>> CreateWorkout(WorkoutVm workout)
+    {
+        await _workoutService.CreateWorkoutAsync(workout);
+        return Created("GetWorkout", workout);
+    }
+
+    // DELETE: api/Workouts/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteWorkout(Guid id)
+    {
+        var workout = await _workoutService.DeleteWorkoutAsync(id);
+        if (workout == null)
         {
-            if (id != workout.Id)
-            {
-                return BadRequest();
-            }
-
-            var result = await _workoutService.UpdateWorkoutAsync(workout);
-            if(result is null)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            return NotFound();
         }
 
-        // POST: api/Workouts
-        [HttpPost]
-        public async Task<ActionResult<WorkoutVm>> CreateWorkout(WorkoutVm workout)
-        {
-            await _workoutService.CreateWorkoutAsync(workout);
-            return Created("GetWorkout", workout);
-        }
-
-        // DELETE: api/Workouts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteWorkout(Guid id)
-        {
-            var workout = await _workoutService.DeleteWorkoutAsync(id);
-            if (workout == null)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }
+        return NoContent();
     }
 }

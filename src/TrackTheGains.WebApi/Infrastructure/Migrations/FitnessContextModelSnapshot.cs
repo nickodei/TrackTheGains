@@ -8,7 +8,7 @@ using TrackTheGains.WebApi.Infrastructure;
 
 #nullable disable
 
-namespace TrackTheGains.WebApi.Migrations
+namespace TrackTheGains.WebApi.Infrastructure.Migrations
 {
     [DbContext(typeof(FitnessContext))]
     partial class FitnessContextModelSnapshot : ModelSnapshot
@@ -71,10 +71,15 @@ namespace TrackTheGains.WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("FinishedExerciseId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("Order")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FinishedExerciseId");
 
                     b.ToTable("Sets");
                 });
@@ -165,6 +170,13 @@ namespace TrackTheGains.WebApi.Migrations
                         .HasForeignKey("SetId");
                 });
 
+            modelBuilder.Entity("TrackTheGains.WebApi.WorkoutSessions.Set", b =>
+                {
+                    b.HasOne("TrackTheGains.WebApi.WorkoutSessions.FinishedExercise", null)
+                        .WithMany("Sets")
+                        .HasForeignKey("FinishedExerciseId");
+                });
+
             modelBuilder.Entity("TrackTheGains.WebApi.WorkoutSessions.WorkoutSession", b =>
                 {
                     b.HasOne("TrackTheGains.WebApi.Workouts.Workout", "Workout")
@@ -185,6 +197,11 @@ namespace TrackTheGains.WebApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Workout");
+                });
+
+            modelBuilder.Entity("TrackTheGains.WebApi.WorkoutSessions.FinishedExercise", b =>
+                {
+                    b.Navigation("Sets");
                 });
 
             modelBuilder.Entity("TrackTheGains.WebApi.WorkoutSessions.Set", b =>
