@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TrackTheGains.WebApi.Models.Workout;
+using TrackTheGains.WebApi.Workouts;
 
 namespace TrackTheGains.WebApi.Infrastructure.EntityConfigurations
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TrackTheGains.WebApi.Controllers.Dtos;
-using TrackTheGains.WebApi.Models.Workout;
 using TrackTheGains.WebApi.Services;
 
 namespace TrackTheGains.WebApi.Controllers

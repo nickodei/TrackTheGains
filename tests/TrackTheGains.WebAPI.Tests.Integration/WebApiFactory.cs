@@ -15,7 +15,7 @@ namespace TrackTheGains.WebAPI.Tests.Integration
 {
     public class WebApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
-        private Respawner respawner;
+        private Respawner respawner = null!;
         private readonly TestcontainerDatabase testcontainers = new TestcontainersBuilder<PostgreSqlTestcontainer>()
             .WithDatabase(new PostgreSqlTestcontainerConfiguration
             {
@@ -33,9 +33,7 @@ namespace TrackTheGains.WebAPI.Tests.Integration
             {
                 services.RemoveAll(typeof(IDbConnectionFactory));
                 services.AddSingleton<IDbConnectionFactory>(_ =>
-                {
-                    return new NpgsqlConnectionFactory(testcontainers.ConnectionString);
-                });
+                    new NpgsqlConnectionFactory(testcontainers.ConnectionString));
             });
         }
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrackTheGains.WebApi.Controllers.Dtos;
 using TrackTheGains.WebApi.Infrastructure;
-using TrackTheGains.WebApi.Models.Workout;
+using TrackTheGains.WebApi.Workouts;
 
 namespace TrackTheGains.WebApi.Services
 {
@@ -41,7 +41,7 @@ namespace TrackTheGains.WebApi.Services
                     {
                         Id = e.Id,
                         Name = e.Name,
-                        OrderNr = e.OrderNr
+                        OrderNr = e.Order
                     }).ToList()
                 })
                 .SingleOrDefaultAsync(x => x.Id == workoutId);
@@ -55,7 +55,7 @@ namespace TrackTheGains.WebApi.Services
                 Exercises = workoutVm.Exercises.Select(e => new Exercise()
                 {
                     Name = e.Name,
-                    OrderNr = e.OrderNr,
+                    Order = e.OrderNr,
                 }).ToList()
             };
 
@@ -76,7 +76,7 @@ namespace TrackTheGains.WebApi.Services
             {
                 Id = e.Id.GetValueOrDefault(),
                 Name = e.Name,
-                OrderNr = e.OrderNr,
+                Order = e.OrderNr,
                 IsDeleted = false,
                 Workout = workout
             }).ToList();

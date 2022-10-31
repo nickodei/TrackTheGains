@@ -1,5 +1,5 @@
 ﻿using TrackTheGains.WebApi.Controllers.Dtos;
-using TrackTheGains.WebApi.Models.Workout;
+using TrackTheGains.WebApi.Workouts;
 
 namespace TrackTheGains.WebApi.Services
 {

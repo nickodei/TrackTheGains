@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
 using TrackTheGains.WebApi.Controllers.Dtos;
-using TrackTheGains.WebApi.Models.Workout;
+using TrackTheGains.WebApi.Workouts;
 using TrackTheGains.WebAPI.Tests.Integration;
 using TrackTheGains.WebAPI.Tests.Integration.Extensions;
 using Xunit;
@@ -35,7 +34,7 @@ namespace Workout_Spec
 
             var workouts = await response.Content.ReadFromJsonAsync<IEnumerable<WorkoutOverviewVm>>();
             workouts.Should().NotBeNull();
-            workouts.Count().Should().Be(0);
+            workouts?.Count().Should().Be(0);
         }
 
         [Fact]
@@ -49,9 +48,9 @@ namespace Workout_Spec
 
             var workouts = await response.Content.ReadFromJsonAsync<IEnumerable<WorkoutOverviewVm>>();
             workouts.Should().NotBeNull();
-            workouts.Count().Should().Be(1);
-            workouts.First().Name.Should().Be("push");
-            workouts.First().ExerciseAmount.Should().Be(0);
+            workouts?.Count().Should().Be(1);
+            workouts?.First().Name.Should().Be("push");
+            workouts?.First().ExerciseAmount.Should().Be(0);
         }
 
         [Theory]
@@ -138,7 +137,7 @@ namespace Workout_Spec
                 Name = "test",
                 Exercises = new List<Exercise>()
                 {
-                    new Exercise() { Name = "ex1", OrderNr = 2 },
+                    new Exercise() { Name = "ex1", Order = 2 },
                     new Exercise() { Name = "ex3", IsDeleted = true }
                 }
             });
@@ -148,10 +147,10 @@ namespace Workout_Spec
 
             var result = await response.Content.ReadFromJsonAsync<WorkoutVm>();
             result.Should().NotBeNull();
-            result.Name.Should().Be("test");
-            result.Exercises.Count.Should().Be(1);
-            result.Exercises[0].Name.Should().Be("ex1");
-            result.Exercises[0].OrderNr.Should().Be(2);
+            result?.Name.Should().Be("test");
+            result?.Exercises.Count.Should().Be(1);
+            result?.Exercises[0].Name.Should().Be("ex1");
+            result?.Exercises[0].OrderNr.Should().Be(2);
         }
 
         #endregion
@@ -180,10 +179,10 @@ namespace Workout_Spec
 
             var workout = await factory.GetFirstWorkout();
             workout.Should().NotBeNull();
-            workout.Name.Should().Be("test");
-            workout.Exercises.Count.Should().Be(2);
-            workout.Exercises.Any(x => x.Name == "ex1" && x.OrderNr == 1).Should().Be(true);
-            workout.Exercises.Any(x => x.Name == "ex2" && x.OrderNr == 2).Should().Be(true);
+            workout?.Name.Should().Be("test");
+            workout?.Exercises.Count.Should().Be(2);
+            workout?.Exercises.Any(x => x.Name == "ex1" && x.Order == 1).Should().Be(true);
+            workout?.Exercises.Any(x => x.Name == "ex2" && x.Order == 2).Should().Be(true);
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrackTheGains.WebApi.Infrastructure.EntityConfigurations;
-using TrackTheGains.WebApi.Models.Workout;
+using TrackTheGains.WebApi.Workouts;
+using TrackTheGains.WebApi.WorkoutSessions;
 
 namespace TrackTheGains.WebApi.Infrastructure;
 
@@ -10,6 +11,11 @@ public class FitnessContext : DbContext
 
     public DbSet<Workout> Workouts => Set<Workout>();
     public DbSet<Exercise> Exercises => Set<Exercise>();
+
+    public DbSet<Set> Sets => Set<Set>();
+    public DbSet<Repetition> Repetitions => Set<Repetition>();
+    public DbSet<WorkoutSession> WorkoutSessions => Set<WorkoutSession>();
+    public DbSet<FinishedExercise> FinishedExercises => Set<FinishedExercise>();
 
     public FitnessContext(DbContextOptions<FitnessContext> options) : base(options) { }
 
