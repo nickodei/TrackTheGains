@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrackTheGains.MAUI.Views.WorkoutOverviewPage"
+             xmlns:model="clr-namespace:TrackTheGains.MAUI.Models"
+             xmlns:viewmodel="clr-namespace:TrackTheGains.MAUI.ViewModels"
+             xmlns:workouts="clr-namespace:TrackTheGains.Shared.Models.Workouts;assembly=TrackTheGains.Shared"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             x:DataType="viewmodel:WorkoutOverviewViewModel"
+             Title="Workouts">
+    <VerticalStackLayout>
+        <CollectionView MinimumHeightRequest="50" ItemsSource="{Binding Workouts}" EmptyView="No Workouts found.">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="workouts:WorkoutOverviewVm">
+                    <Frame Padding="8">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:WorkoutOverviewViewModel}}, Path=GoToEditWorkoutPageCommand}"
+                                CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" FontSize="Subtitle"/>
+                            <Label Text="{Binding ExerciseAmount, StringFormat='{0} Exercises'}" FontSize="Caption"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
+        <Button Text="New Workout" Command="{Binding GoToNewWorkoutPageCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

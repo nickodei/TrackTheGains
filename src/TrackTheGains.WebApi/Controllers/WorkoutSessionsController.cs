@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TrackTheGains.Shared.Models.WorkoutsSessions;
 using TrackTheGains.WebApi.WorkoutSessions;
 
 namespace TrackTheGains.WebApi.Controllers;

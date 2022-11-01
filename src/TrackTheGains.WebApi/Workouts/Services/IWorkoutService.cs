@@ -1,4 +1,4 @@
-﻿using TrackTheGains.WebApi.Controllers.Dtos;
+﻿using TrackTheGains.Shared.Models.Workouts;
 using TrackTheGains.WebApi.Workouts;
 
 namespace TrackTheGains.WebApi.Services

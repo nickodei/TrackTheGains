@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TrackTheGains.WebApi.Controllers.Dtos;
+using TrackTheGains.Shared.Models.Workouts;
 using TrackTheGains.WebApi.Infrastructure;
 using TrackTheGains.WebApi.Workouts;
 

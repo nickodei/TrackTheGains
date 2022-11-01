@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using System.Net;
 using System.Net.Http.Json;
-using TrackTheGains.WebApi.Controllers.Dtos;
+using TrackTheGains.Shared.Models.Workouts;
 using TrackTheGains.WebApi.Workouts;
 using TrackTheGains.WebAPI.Tests.Integration;
 using TrackTheGains.WebAPI.Tests.Integration.Extensions;

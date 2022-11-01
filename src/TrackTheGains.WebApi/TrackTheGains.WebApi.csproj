@@ -34,11 +34,15 @@
     </PackageReference>
   </ItemGroup>
 
-	<!--<PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TrackTheGains.Shared\TrackTheGains.Shared.csproj" />
+  </ItemGroup>
+
+	<PropertyGroup>
 		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
 	</PropertyGroup>
 
 	<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
 		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net60) run nswag.json /variables:Configuration=$(Configuration)" />
-	</Target>-->
+	</Target>
 </Project>

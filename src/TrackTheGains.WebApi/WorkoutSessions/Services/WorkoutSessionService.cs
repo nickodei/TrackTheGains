@@ -1,3 +1,4 @@
+using TrackTheGains.Shared.Models.WorkoutsSessions;
 using TrackTheGains.WebApi.Infrastructure;
 
 namespace TrackTheGains.WebApi.WorkoutSessions;
