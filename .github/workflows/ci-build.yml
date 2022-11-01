@@ -3,6 +3,8 @@ name: CI Build
 on:
   push:
     branches: [ master ]
+    paths:
+      - src/TrackTheGains.MAUI/**
     paths-ignore:
       - '**/*.md'
       - '**/*.gitignore'
@@ -45,4 +47,4 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with:
           name: track_the_gains-android-ci-build
-          path: src/MauiBeach/bin/Release/net6.0-android/*Signed.a*
+          path: src/TrackTheGains.MAUI/bin/Release/net6.0-android/*Signed.a*
