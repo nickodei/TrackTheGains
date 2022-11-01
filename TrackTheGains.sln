@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.WebAPI.Tests.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{939471A5-EC8E-4FA2-B429-570E19DE57D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTheGains.WebApi", "src\TrackTheGains.WebApi\TrackTheGains.WebApi.csproj", "{9207C2F6-65F4-4106-BADC-E42771C79B2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.WebApi", "src\TrackTheGains.WebApi\TrackTheGains.WebApi.csproj", "{9207C2F6-65F4-4106-BADC-E42771C79B2F}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{67DB2671-399F-42FA-904F-6A74C22E5D2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{9207C2F6-65F4-4106-BADC-E42771C79B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9207C2F6-65F4-4106-BADC-E42771C79B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9207C2F6-65F4-4106-BADC-E42771C79B2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67DB2671-399F-42FA-904F-6A74C22E5D2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67DB2671-399F-42FA-904F-6A74C22E5D2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67DB2671-399F-42FA-904F-6A74C22E5D2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67DB2671-399F-42FA-904F-6A74C22E5D2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

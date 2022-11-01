@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+
+  web:
+    container_name: 'TrackTheGains-WebApi'
+    image: 'aspnetcoreapp'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+     - "8000:80"
+    depends_on:
+     - "postgres"
+    networks:
+      - track_the_gains-network
+
+  postgres:
+    container_name: 'TrackTheGains-Database'
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - track_the_gains-network
+
+networks:
+  track_the_gains-network:
+    driver: bridge

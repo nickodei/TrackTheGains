@@ -23,13 +23,6 @@ builder.Services.AddDbContext<FitnessContext>((provider, opt) =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<FitnessContext>();
-    db.Database.EnsureDeleted();
-    db.Database.Migrate();
-}
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -37,7 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUi3();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

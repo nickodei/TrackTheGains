@@ -41,7 +41,12 @@ namespace TrackTheGains.WebAPI.Tests.Integration
         {
             await testcontainers.StartAsync();
 
-            using var scope = Server.Services.CreateScope();
+            using (var scope = Server.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<FitnessContext>();
+                db.Database.EnsureCreated();
+            }
+
             respawner = await RespawnHelper.CreateRespawner(ConnectionString);
         }
 
