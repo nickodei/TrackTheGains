@@ -18,6 +18,8 @@ services:
   postgres:
     container_name: 'TrackTheGains-Database'
     image: postgres
+    ports:
+     - "5432"
     environment:
       POSTGRES_PASSWORD: postgres
     networks:

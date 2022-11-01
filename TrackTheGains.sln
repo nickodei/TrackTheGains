@@ -8,6 +8,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.WebAPI.Tests.Integration", "tests\TrackTheGains.WebAPI.Tests.Integration\TrackTheGains.WebAPI.Tests.Integration.csproj", "{A4641F50-DBEE-4A2B-BBD9-C42CDEA033CE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{939471A5-EC8E-4FA2-B429-570E19DE57D2}"
+	ProjectSection(SolutionItems) = preProject
+		src\.dockerignore = src\.dockerignore
+		src\docker-compose.yml = src\docker-compose.yml
+		src\Dockerfile = src\Dockerfile
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTheGains.WebApi", "src\TrackTheGains.WebApi\TrackTheGains.WebApi.csproj", "{9207C2F6-65F4-4106-BADC-E42771C79B2F}"
 EndProject
